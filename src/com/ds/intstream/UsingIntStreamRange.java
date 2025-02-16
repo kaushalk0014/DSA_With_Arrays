@@ -1,4 +1,4 @@
-package IntStream;
+package com.ds.intstream;
 
 import java.util.Iterator;
 import java.util.stream.IntStream;
