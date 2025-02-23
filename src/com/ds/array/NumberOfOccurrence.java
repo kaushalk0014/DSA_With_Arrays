@@ -1,5 +1,7 @@
 package com.ds.array;
 
+import java.util.Collections;
+
 public class NumberOfOccurrence {
 
 	public static void main(String[] args) {
@@ -10,6 +12,8 @@ public class NumberOfOccurrence {
 		
 		int count= last-first+1;
 		System.out.println("count = "+ count);
+
+		 
 		
 	}
 	
