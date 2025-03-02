@@ -1,6 +1,7 @@
 package com.ds.array;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,5 +45,15 @@ public class ArrayFrequency {
 		.boxed().collect(Collectors.groupingBy(num-> num, Collectors.counting()));
 		
 		System.out.println(frequencyOfArray);
+		
+		
+		//Given an array arr of positive integers and an integer x. Return the frequency of x in the array.
+		
+		int intArr[]= {1, 2, 3, 3, 2, 2, 1}; 
+		int target =2;
+		
+		int frequency=Collections.frequency( Arrays.stream(intArr).boxed().toList(), target);
+		
+		System.out.println("Frequency: " +frequency);
 	}
 }
