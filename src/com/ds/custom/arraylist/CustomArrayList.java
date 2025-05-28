@@ -1,28 +1,107 @@
 package com.ds.custom.arraylist;
 
-public class CustomArrayList {
+import java.util.function.Consumer;
 
-	public boolean add(int value) {
-		return true;
+public class CustomArrayList<T> {
+
+	private Object arr[] = null;
+	private int size = 0;
+	private static final int INITIAL_CAPACITY = 16;
+
+	public CustomArrayList() {
+		arr = new Object[INITIAL_CAPACITY];
 	}
 
-	public boolean contains(int value) {
-		return true;
+	public void add(T value) {
+		ensureCapacity();
+		arr[size++] = value;
+	}
+
+	private void ensureCapacity() {
+		if (size == arr.length) {
+			int newCapacity = arr.length * 2;
+			Object[] newArray = new Object[newCapacity];
+			for (int i = 0; i < arr.length; i++) {
+				newArray[i] = arr[i];
+			}
+			arr = newArray;
+		}
+	}
+
+	public int contains(T value) {
+		
+		if(value==null) {
+			for(int i=0; i<size; i++) {
+				if(arr[i]==null) {
+					return i;
+				}
+			}
+		}else {
+			for(int i=0; i< size; i++) {
+				if(value.equals(arr[i])) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	public T remove(int index) {
+		checkIndex(index);
+		@SuppressWarnings("unchecked")
+		T removeItem = (T) arr[index];
+		for (int i = index; i < size - 1; i++) {
+			if (i == index) {
+				arr[i] = arr[i + 1];
+			}
+		}
+		return removeItem;
+	}
+
+	public void addAll(T[] items) {
+		for(T item: items) {
+			add(item);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public T get(int index) {
+		checkIndex(index);
+		return (T) arr[index];
+
+	}
+
+	private void checkIndex(int index) {
+		if (size < 0 || index > size) {
+			throw new IndexOutOfBoundsException("Index " + index + ", Size " + size);
+		}
 	}
 	
-	public boolean remove(int value) {
-		return true;
+	public boolean isEmpty() {
+		return size==0;
 	}
-	
-	public boolean addAll(int[] values) {
-		return true;
-	}
-	
-	public int get(int index) {
-		return 0;
-	}
-	
 	public int size() {
-		return 0;
+		return size;
+	}
+	
+	public void forEach(Consumer<? super T> action) {
+		for(int i =0; i<size; i++) {
+			@SuppressWarnings("unchecked")
+			T data=(T) arr[i];
+			action.accept(data);
+		}
+	}
+	
+	@Override
+	public String toString() {
+		
+		StringBuilder builder=new StringBuilder("[");
+		for(int i=0; i<size; i++) {
+			builder.append(arr[i]);
+			if(i<size-1)
+				builder.append(",");
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 }
